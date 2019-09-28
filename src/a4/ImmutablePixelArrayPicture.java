@@ -38,6 +38,8 @@ public class ImmutablePixelArrayPicture implements Picture {
 		
 		
 		
+		
+		
 		}
 	
 	// Creates new object by providing geometry and initial value for all pixels.
@@ -92,7 +94,17 @@ public class ImmutablePixelArrayPicture implements Picture {
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 		//what is wrong here?
-				Picture mute = new MutablePixelArrayPicture(pixel_array);
+		
+		Pixel[][] pixel_array_2 = new Pixel[this.getWidth()][this.getHeight()];
+		for(int x1 = 0; x1<this.getWidth();x1++) {
+			for(int y1 = 0; y1< this.getHeight();y1++) {
+				pixel_array_2[x1][y1]=pixel_array[x1][y1];
+			}
+		}
+		
+		
+		
+		Picture mute = new MutablePixelArrayPicture(pixel_array_2);
 				mute.paint(x, y, p);
 		
 		return mute;
