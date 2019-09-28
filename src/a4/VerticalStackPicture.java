@@ -4,6 +4,7 @@ public class VerticalStackPicture implements Picture{
 	
 	private Picture top;
 	private Picture bottom; 
+	private Pixel[][] pixel_array;
 	
 	public VerticalStackPicture(Picture top, Picture bottom) {
 		
@@ -73,8 +74,8 @@ public class VerticalStackPicture implements Picture{
 		// (bx, by) with the specified pixel value. 
 		
 		
-		for(int x = 0; x<(left.getWidth()+right.getWidth()); x++) {
-			for(int y=0; y<left.getHeight(); y++) {
+		for(int x = 0; x<(top.getWidth()); x++) {
+			for(int y=0; y<top.getHeight()+bottom.getHeight(); y++) {
 				if(x >= ax && x <=bx && y >= ay && y <= by) {
 					//I received help working out the parameters of my if 
 					//statement from the JUnit test code
@@ -106,8 +107,8 @@ public class VerticalStackPicture implements Picture{
 		int xDistence = Math.abs(ax-bx);
 		int yDistence = Math.abs(ay-by);
 		
-		for(int x = 0; x<(left.getWidth()+right.getWidth()); x++) {
-			for(int y=0; y<left.getHeight(); y++) {
+		for(int x = 0; x<(top.getWidth()); x++) {
+			for(int y=0; y<top.getHeight()+bottom.getHeight(); y++) {
 				if(x >= ax && x <=bx && y >= ay && y <= by) {
 					pixel_array[x][y].blend(p, factor);}
 			}
@@ -132,8 +133,8 @@ public class VerticalStackPicture implements Picture{
 			throw new IllegalArgumentException("Radius cannot be negative");
 		}
 		
-		for(int x = 0; x<(left.getWidth()+right.getWidth()); x++) {
-			for(int y = 0; y<left.getHeight(); y++) {
+		for(int x = 0; x<(top.getWidth()); x++) {
+			for(int y = 0; y<top.getHeight()+bottom.getHeight(); y++) {
 				if(Math.sqrt((x-cx)*(x-cx)+(y-cy)*(y-cy)) <= radius){
 				pixel_array[x][y]= p; }
 			}
@@ -148,8 +149,8 @@ public class VerticalStackPicture implements Picture{
 	public Picture paint(int cx, int cy, double radius, Pixel p, double factor) {
 		// TODO Auto-generated method stub
 		
-		for(int x = 0; x<(left.getWidth()+right.getWidth()); x++) {
-			for(int y = 0; y<left.getHeight(); y++) {
+		for(int x = 0; x<(top.getWidth()); x++) {
+			for(int y = 0; y<top.getHeight()+bottom.getHeight(); y++) {
 				if(Math.sqrt((x-cx)*(x-cx)+(y-cy)*(y-cy)) <= radius){
 				pixel_array[x][y].blend(p, factor); }
 			}
