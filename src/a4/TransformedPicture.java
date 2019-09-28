@@ -4,12 +4,16 @@ public class TransformedPicture implements Picture{
 	
 	private Picture source; 
 	private PixelTransformation xform; 
-	
+	private Picture pic; 
+	private PixelTransformation form; 
 	
 	public TransformedPicture (Picture source, PixelTransformation xform) {
 		
 		this.source = source; 
 		this.xform = xform;
+		
+		 this.pic = source; 
+		 this.form = xform; 
 		
 	}
 
@@ -28,7 +32,10 @@ public class TransformedPicture implements Picture{
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-		return source.getPixel(x, y);
+		
+		
+		
+		return form.transform(pic.getPixel(x,y));
 	}
 
 	@Override
