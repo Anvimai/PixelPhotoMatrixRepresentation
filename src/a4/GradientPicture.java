@@ -12,6 +12,15 @@ public class GradientPicture implements Picture{
 	
 	public GradientPicture(int width, int height, Pixel upper_left, Pixel upper_right,
 									Pixel lower_left, Pixel lower_right) {
+		if(width==0||height==0||upper_left==null||upper_right==null
+			||lower_left==null||lower_right==null) {
+			
+			throw new IllegalArgumentException("Values cannot be null");
+			
+		}
+		
+		
+		
 		this.width = width; 
 		this.height = height; 
 		this.upper_left = upper_left; 
@@ -24,12 +33,22 @@ public class GradientPicture implements Picture{
 		pixel_array[0][height-1] = lower_left; 
 		pixel_array[width-1][0] = upper_right; 
 		
-	
-		for(int i = 1; i<(width-1)/2; i++) {
-			
-			//pixel_array[i][0].blend(pixel_array[0][0], 1.0/i);
-			
+		for(int y = 0; y<1; y++) {
+			for(int x =1; x<width; x++) {
+				pixel_array[x][y] = upper_left.blend(upper_right, 1.0/((width)-x));
+			}
 		}
+		for(int y = height-1; y<height; y++) {
+			for(int x =1; x<width; x++) {
+				pixel_array[x][y] = lower_left.blend(lower_right, 1.0/((width)-x));
+			}
+		}
+		for(int x = 0; x<width; x++) {
+			for(int y =1; y<height-1; y++) {
+				pixel_array[x][y] = pixel_array[x][0].blend(pixel_array[x][height-1], 1.0/((height)-y));
+			}
+		}
+		
 
 		
 	}
@@ -49,10 +68,6 @@ public class GradientPicture implements Picture{
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-
-		if(x<0||y<0||x>=this.getWidth()||y>=this.getWidth()) {
-			throw new IllegalArgumentException("Values should be positive");
-		}
 		
 		return pixel_array[x][y];
 	}
@@ -71,6 +86,7 @@ public class GradientPicture implements Picture{
 	@Override
 	public Picture paint(int x, int y, Pixel p, double factor) {
 		// TODO Auto-generated method stub
+		
 		pixel_array[x][y].blend(p, factor);
 		
 		return new MutablePixelArrayPicture(pixel_array);
