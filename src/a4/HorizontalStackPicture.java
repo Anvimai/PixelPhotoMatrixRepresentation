@@ -18,13 +18,11 @@ public class HorizontalStackPicture implements Picture {
 		}
 		this.left = left; 
 		this.right = right; 
-		this.pixel_array = new Pixel[(left.getWidth()+right.getWidth())][left.getHeight()]; 
+		//this.pixel_array = new Pixel[(left.getWidth()+right.getWidth())][left.getHeight()]; 
 		
 		//iterate through and .getPixel
 		
 		
-		
-		//Picture merged = new MutablePixelArrayPicture(left.getHeight(),(left.getWidth()+right.getWidth()));
 
 	}
 
@@ -43,14 +41,37 @@ public class HorizontalStackPicture implements Picture {
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-		return pixel_array[x][y];
+		//return pixel_array[x][y];
+	if(x<left.getWidth()) {
+			
+			
+			return left.getPixel(x, y); 
+		}
+		
+		if(x>left.getWidth()) {
+			
+			
+			return right.getPixel(x-left.getWidth(), y); 
+		}
+		
+		return null;
 	}
 
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 		
-		pixel_array[x][y] = p;
+		if(x<left.getWidth()) {
+			
+			left.paint(x, y, p);
+			return this; 
+		}
+		
+		if(x>left.getWidth()) {
+			
+			right.paint(x-left.getWidth(), y, p);
+			return this; 
+		}
 		
 		return this;
 	}
@@ -97,22 +118,8 @@ public class HorizontalStackPicture implements Picture {
 	@Override
 	public Picture paint(int ax, int ay, int bx, int by, Pixel p, double factor) {
 		// TODO Auto-generated method stub
-		
-		//int xDistence = Math.abs(ax-bx);
-		//int yDistence = Math.abs(ay-by);
-		
-		//for(int i = ax; i<xDistence; i++) {
-			//for(int j=ay; j<yDistence; j++) {
-				
-				//pixel_array[i][j].blend(p, factor);
-				
-			//}
-			
-		//}
-		
-		int xDistence = Math.abs(ax-bx);
-		int yDistence = Math.abs(ay-by);
-		
+
+
 		for(int x = 0; x<(left.getWidth()+right.getWidth()); x++) {
 			for(int y=0; y<left.getHeight(); y++) {
 				if(x >= ax && x <=bx && y >= ay && y <= by) {

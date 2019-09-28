@@ -20,6 +20,9 @@ public class VerticalStackPicture implements Picture{
 		this.top = top;
 		this.bottom = bottom; 
 		
+		
+		
+		
 	}
 
 	@Override
@@ -37,14 +40,36 @@ public class VerticalStackPicture implements Picture{
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-		return pixel_array[x][y];
+		if(x<bottom.getHeight()) {
+			
+			
+			return bottom.getPixel(x, y); 
+		}
+		
+		if(x>bottom.getHeight()) {
+			
+
+			return top.getPixel(x, y-bottom.getHeight());
+		}
+		
+		return null;
 	}
 
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 		
-		pixel_array[x][y] = p;
+		if(y<top.getHeight()) {
+			
+			top.paint(x, y, p);
+			return this; 
+		}
+		
+		if(y>top.getHeight()) {
+			
+			bottom.paint(x, y-top.getHeight(), p);
+			return this; 
+		}
 		
 		return this;
 	}
