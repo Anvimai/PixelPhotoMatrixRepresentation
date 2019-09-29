@@ -42,8 +42,12 @@ public class HorizontalStackPicture implements Picture {
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
 		//return pixel_array[x][y];
+		
+		
+		
 	if(x<left.getWidth()) {
 			
+		 
 			
 			return left.getPixel(x, y); 
 		}
@@ -63,17 +67,22 @@ public class HorizontalStackPicture implements Picture {
 		
 		if(x<left.getWidth()) {
 			
-			left.paint(x, y, p);
+		
+			left = left.paint(x, y, p);
 			return this; 
 		}
 		
 		if(x>left.getWidth()) {
 			
-			right.paint(x-left.getWidth(), y, p);
+			//right.paint((x-left.getWidth()), y, p);
+			//return this; 
+			
+			
+			right = right.paint(x, y, p);
 			return this; 
 		}
 		
-		return this;
+		return null;
 	}
 
 	@Override

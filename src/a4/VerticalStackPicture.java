@@ -46,7 +46,7 @@ public class VerticalStackPicture implements Picture{
 			return bottom.getPixel(x, y); 
 		}
 		
-		if(x>bottom.getHeight()) {
+		if(x>=bottom.getHeight()) {
 			
 
 			return top.getPixel(x, y-bottom.getHeight());

@@ -75,7 +75,14 @@ public class GradientPicture implements Picture{
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
-		Picture mute = new MutablePixelArrayPicture(pixel_array);
+		
+		Pixel[][] mute_array = new Pixel[this.getWidth()][this.getHeight()];
+		for(int x1=0; x1<this.getWidth();x1++) {
+			for(int y1=0;y1<this.getHeight();y1++) {
+				mute_array[x1][y1]=pixel_array[x1][y1];
+			}
+		}
+		Picture mute = new MutablePixelArrayPicture(mute_array);
 		
 		mute.paint(x, y, p);
 		
@@ -86,6 +93,12 @@ public class GradientPicture implements Picture{
 	@Override
 	public Picture paint(int x, int y, Pixel p, double factor) {
 		// TODO Auto-generated method stub
+		
+		if(x<0||x>=this.getWidth()||y>=this.getHeight()||y<0) {
+			
+			throw new IllegalArgumentException("Values must not be null");
+			
+		}
 		
 		pixel_array[x][y].blend(p, factor);
 		
