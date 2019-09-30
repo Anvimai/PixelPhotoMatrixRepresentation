@@ -28,24 +28,26 @@ public class GradientPicture implements Picture{
 		this.lower_left = lower_left; 
 		this.lower_right = lower_right; 
 		this.pixel_array = new Pixel[width][height];
-		pixel_array[0][0] = upper_left;
-		pixel_array[width-1][height-1] = lower_right; 
-		pixel_array[0][height-1] = lower_left; 
-		pixel_array[width-1][0] = upper_right; 
+		this.pixel_array[0][0] = upper_left;
+		this.pixel_array[width-1][height-1] = lower_right; 
+		this.pixel_array[0][height-1] = lower_left; 
+		this.pixel_array[width-1][0] = upper_right; 
 		
 		for(int y = 0; y<1; y++) {
-			for(int x =1; x<width; x++) {
-				pixel_array[x][y] = upper_left.blend(upper_right, 1.0/((width)-x));
+			for(int x =1; x<width-1; x++) {
+				pixel_array[x][y] = upper_left.blend(upper_right, (1.0/((this.getWidth()-1)))*x);
 			}
 		}
 		for(int y = height-1; y<height; y++) {
-			for(int x =1; x<width; x++) {
-				pixel_array[x][y] = lower_left.blend(lower_right, 1.0/((width)-x));
+			for(int x =1; x<width-1; x++) {
+				pixel_array[x][y] = lower_left.blend(lower_right, (1.0/((this.getWidth()-1)))*x);
 			}
 		}
 		for(int x = 0; x<width; x++) {
-			for(int y =1; y<height-1; y++) {
-				pixel_array[x][y] = pixel_array[x][0].blend(pixel_array[x][height-1], 1.0/((height)-y));
+			for(int y =1; y<height-1; y++) { 
+				double inverse = (y/4);
+				pixel_array[x][y] = pixel_array[x][0].blend(pixel_array[x][height-1], ((1.0/(height-1))*y));
+				
 			}
 		}
 		
@@ -68,7 +70,7 @@ public class GradientPicture implements Picture{
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-		
+	
 		return pixel_array[x][y];
 	}
 
