@@ -20,6 +20,20 @@ public class VerticalStackPicture implements Picture{
 		this.top = top;
 		this.bottom = bottom; 
 		
+		pixel_array = new Pixel[this.getWidth()][this.getHeight()];
+		
+		for(int x=0; x<top.getWidth();x++) {
+			for(int y = 0; y<top.getHeight();y++) {
+				pixel_array[x][y]= top.getPixel(x, y);}
+				
+		}
+		
+		for(int x = 0; x<this.getWidth();x++) {
+			for(int y =top.getHeight(); y<this.getHeight();y++) {
+				pixel_array[x][y]=bottom.getPixel((x),( y-top.getHeight()));
+			}
+		}
+		
 		
 		
 		
@@ -40,38 +54,15 @@ public class VerticalStackPicture implements Picture{
 	@Override
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
-		if(x<bottom.getHeight()) {
-			
-			
-			return bottom.getPixel(x, y); 
-		}
-		
-		if(x>=bottom.getHeight()) {
-			
-
-			return top.getPixel(x, y-bottom.getHeight());
-		}
-		
-		return null;
+	return pixel_array[x][y];
 	}
 
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 		
-		if(y<top.getHeight()) {
-			
-			top.paint(x, y, p);
-			return this; 
-		}
-		
-		if(y>top.getHeight()) {
-			
-			bottom.paint(x, y-top.getHeight(), p);
-			return this; 
-		}
-		
-		return this;
+	pixel_array[x][y]=p;
+	return this;
 	}
 
 	@Override

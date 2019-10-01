@@ -18,10 +18,23 @@ public class HorizontalStackPicture implements Picture {
 		}
 		this.left = left; 
 		this.right = right; 
-		//this.pixel_array = new Pixel[(left.getWidth()+right.getWidth())][left.getHeight()]; 
 		
-		//iterate through and .getPixel
+		this.pixel_array = new Pixel[this.getWidth()][left.getHeight()];
 		
+		for(int x=0; x<left.getWidth();x++) {
+			for(int y = 0; y<left.getHeight();y++) {
+				pixel_array[x][y]= left.getPixel(x, y);}
+				
+		}
+		
+		for(int x = left.getWidth(); x<this.getWidth();x++) {
+			for(int y =0; y<left.getHeight();y++) {
+				pixel_array[x][y]=right.getPixel((x-left.getWidth()), y);
+			}
+		}
+	
+		
+	
 		
 
 	}
@@ -42,47 +55,21 @@ public class HorizontalStackPicture implements Picture {
 	public Pixel getPixel(int x, int y) {
 		// TODO Auto-generated method stub
 		//return pixel_array[x][y];
-		
-		
-		
-	if(x<left.getWidth()) {
 			
 		 
 			
-			return left.getPixel(x, y); 
-		}
-		
-		if(x>left.getWidth()) {
-			
-			
-			return right.getPixel(x-left.getWidth(), y); 
-		}
-		
-		return null;
-	}
+	return pixel_array[x][y];}
 
 	@Override
 	public Picture paint(int x, int y, Pixel p) {
 		// TODO Auto-generated method stub
 		
-		if(x<left.getWidth()) {
-			
+	
+	pixel_array[x][y]=p;
+				
+		return this; 
 		
-			left = left.paint(x, y, p);
-			return this; 
-		}
 		
-		if(x>left.getWidth()) {
-			
-			//right.paint((x-left.getWidth()), y, p);
-			//return this; 
-			
-			
-			right = right.paint(x, y, p);
-			return this; 
-		}
-		
-		return null;
 	}
 
 	@Override
